@@ -1,0 +1,23 @@
+<h1>Hi !</h1>
+<p>You're logged in !</p>
+<h3>Suggested movies</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">Movie Name</th>
+            <th style="width: 30%">Director's Name</th>
+            <th style="width: 30%">Year Of Publication</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tr *ngFor="let movie of movies; let i = index">
+        <td>{{ movie.name[0].toUpperCase() + movie.name.substr(1).toLowerCase() }}</td>
+        <td>{{ movie.directorsName[0].toUpperCase() + movie.directorsName.substr(1).toLowerCase() }}</td>
+        <td>{{ movie.yearOfPublication }}</td>
+        <td style="white-space: nowrap">
+        <a (click)="updateMovie(movie)" class="btn btn-sm btn-primary mr-1">Edit</a>
+        <a (click)="deleteMovie(movie.id)" class="btn btn-sm btn-danger btn-delete-user">Delete</a>
+        </td>
+</tr>
+</table>
+
