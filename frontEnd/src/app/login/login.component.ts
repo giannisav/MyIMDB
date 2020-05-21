@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
 
     public ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
             password: ['', Validators.required],
+            username: ['', Validators.required],
         });
     }
 
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['home']);
                 },
                 (error) => {
-                    this.alertService.error('Wrong username or password', true);
+                    this.alertService.error('Wrong username or password');
                     this.loading = false;
                     this.router.navigate(['']);
                 });
