@@ -1,35 +1,31 @@
-<h1 *ngIf="isEditMode">Edit Movie</h1>
-<h1 *ngIf="!isEditMode">Add Movie</h1>
-<form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="name">Movie Name</label>
-        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && a.name.errors }" />
-        <div *ngIf="submitted && a.name.errors" class="invalid-feedback">
-            <div *ngIf="a.name.errors.required">Movie Name is required</div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="yearOfPublication">Year Of Publication</label>
-        <input type="text" formControlName="yearOfPublication" class="form-control" [ngClass]="{ 'is-invalid': submitted && a.yearOfPublication.errors }" />
-        <div *ngIf="submitted && a.yearOfPublication.errors" class="invalid-feedback">
-            <div *ngIf="a.yearOfPublication.errors.required">Year Of Publication is required</div>
-            <div *ngIf="a.yearOfPublication.errors.minlength">Year Of Publication should be 4 digits</div>
-            <div *ngIf="a.yearOfPublication.errors.maxlength">Year Of Publication should be 4 digits</div>
-            <div *ngIf="a.yearOfPublication.errors.pattern">Year Of Publication should contain only digits</div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="directorsName">Director's Name</label>
-        <input type="text" formControlName="directorsName" class="form-control" [ngClass]="{ 'is-invalid': submitted && a.directorsName.errors }" />
-        <div *ngIf="submitted && a.directorsName.errors" class="invalid-feedback">
-            <div *ngIf="a.directorsName.errors.required">Director's name is required</div>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Save
-        </button>
-    </div>
-</form>
+<mat-card class="form-container example-container">
+    <h2 *ngIf="isEditMode">Edit Movie</h2>
+    <h2 *ngIf="!isEditMode">Add Movie</h2>
+    <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Movie Name</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-error *ngIf="movieForm.controls.name.touched && movieForm.controls.name.invalid">
+                <span *ngIf="movieForm.controls.name.errors.required">Movie Name is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Year Of Publication</mat-label>
+            <input matInput formControlName="yearOfPublication" required>
+            <mat-error *ngIf="movieForm.controls.yearOfPublication.touched && movieForm.controls.yearOfPublication.invalid">
+                <span *ngIf="movieForm.controls.yearOfPublication.errors.required">Year Of Publication is mandatory.</span>
+                <span *ngIf="movieForm.controls.yearOfPublication.errors.pattern">Year Of Publication should contain only digits.</span>
+                <span *ngIf="movieForm.controls.yearOfPublication.errors.minlength">Year Of Publication should be 4 digits.</span>
+                <span *ngIf="movieForm.controls.yearOfPublication.errors.maxlength">Year Of Publication should be 4 digits.</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Director's Name</mat-label>
+            <input matInput formControlName="directorsName" required>
+            <mat-error *ngIf="movieForm.controls.directorsName.touched && movieForm.controls.directorsName.invalid">
+                <span *ngIf="movieForm.controls.directorsName.errors.required">Director's Name is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
+        <button class="form-button" mat-raised-button color="primary" [disabled]="loading" type="submit">Save</button>
+    </form>
+</mat-card>

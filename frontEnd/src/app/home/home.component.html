@@ -1,23 +1,38 @@
-<h1>Hi !</h1>
-<p>You're logged in !</p>
-<h3>Suggested movies</h3>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width: 30%">Movie Name</th>
-            <th style="width: 30%">Director's Name</th>
-            <th style="width: 30%">Year Of Publication</th>
-            <th style="width: 10%"></th>
-        </tr>
-    </thead>
-    <tr *ngFor="let movie of movies; let i = index">
-        <td>{{ movie.name[0].toUpperCase() + movie.name.substr(1).toLowerCase() }}</td>
-        <td>{{ movie.directorsName[0].toUpperCase() + movie.directorsName.substr(1).toLowerCase() }}</td>
-        <td>{{ movie.yearOfPublication }}</td>
-        <td style="white-space: nowrap">
-        <a (click)="getMovieById(movie.id)" class="btn btn-sm btn-primary mr-1">Edit</a>
-        <a (click)="deleteMovie(movie.id)" class="btn btn-sm btn-danger btn-delete-user">Delete</a>
-        </td>
-    </tr>
-</table>
+<mat-card class="form-container example-container">
+    <h1>Hello {{ currentUser }} !</h1>
+    <h3>Suggested movies</h3>
+
+    <mat-table [dataSource]="movies" class="mat-elevation-z8">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Movie Name </mat-header-cell>
+            <mat-cell *matCellDef="let movie"> {{ movie.name[0].toUpperCase() + movie.name.substr(1).toLowerCase() }} </mat-cell>
+        </ng-container>
+  
+        <!-- directorsName Column -->
+        <ng-container matColumnDef="directorsName">
+            <mat-header-cell *matHeaderCellDef> Director's Name </mat-header-cell>
+            <mat-cell *matCellDef="let movie"> {{ movie.directorsName[0].toUpperCase() + movie.directorsName.substr(1).toLowerCase() }} </mat-cell>
+        </ng-container>
+
+         <!-- yearOfPublication Column -->
+         <ng-container matColumnDef="yearOfPublication">
+            <mat-header-cell *matHeaderCellDef> Year Of Publication </mat-header-cell>
+            <mat-cell *matCellDef="let movie"> {{movie.yearOfPublication}} </mat-cell>
+        </ng-container>
+  
+
+        <!-- Edit & Delete Buttons Column -->
+        <ng-container matColumnDef="Edit/Delete">
+            <mat-header-cell *matHeaderCellDef> Edit/Delete</mat-header-cell>
+            <mat-cell *matCellDef="let movie">
+                <button class="form-button" (click)="getMovieById(movie.id)" color="primary" mat-raised-button>Edit</button>
+                <button class="form-button" (click)="deleteMovie(movie.id)" color="warn" mat-raised-button>Delete</button>
+            </mat-cell>
+        </ng-container>
+  
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</mat-card>
 

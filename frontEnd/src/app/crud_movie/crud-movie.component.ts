@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from '@app/_services/alert.service';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { MovieService } from '@app/_services/movie.service';
+import { SnackBarService } from '@app/_services/snack-bar.service';
 import { MovieDto } from '@app/dto/movieDto';
 
 @Component({
@@ -17,7 +18,6 @@ export class CrudMovieComponent implements OnInit {
     public id: number;
     public isEditMode = false;
     public loading = false;
-    public submitted = false;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -25,7 +25,7 @@ export class CrudMovieComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private movieService: MovieService,
-      private alertService: AlertService,
+      private snackBar: SnackBarService,
   ) {
     this.isUserlogged = this.authenticationService.isUserLoggedIn();
     if (!this.isUserlogged) {
@@ -40,19 +40,17 @@ export class CrudMovieComponent implements OnInit {
             yearOfPublication: ['',
             Validators.compose( [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]{4}$')])],
         });
+        // this.movieForm.reset();
         this.isEditMode = this.route.snapshot.queryParamMap.get('edit') ? true : false;
         if (this.isEditMode) {
             this.updateFields();
         }
     }
 
-    get a() { return this.movieForm.controls; }
+    get f() { return this.movieForm.controls; }
 
     public onSubmit() {
-        this.submitted = true;
-        this.alertService.clear();
 
-        // stop here if form is invalid
         if (this.movieForm.invalid) {
             return;
         }
@@ -66,9 +64,9 @@ export class CrudMovieComponent implements OnInit {
 
     public updateFields() {
         const movieDto: MovieDto = JSON.parse(this.route.snapshot.queryParamMap.get('movieDto'));
-        this.a.name.setValue(movieDto.name);
-        this.a.directorsName.setValue(movieDto.directorsName);
-        this.a.yearOfPublication.setValue(movieDto.yearOfPublication);
+        this.f.name.setValue(movieDto.name);
+        this.f.directorsName.setValue(movieDto.directorsName);
+        this.f.yearOfPublication.setValue(movieDto.yearOfPublication);
     }
 
     public saveMovie(movieDto: MovieDto) {
@@ -76,14 +74,14 @@ export class CrudMovieComponent implements OnInit {
             .subscribe(
             () => {
               if (this.isEditMode) {
-                this.alertService.success('Movie updated successfully', true);
+                this.snackBar.openSnackBar('Movie updated successfully', 'Ok');
               } else {
-                this.alertService.success('Movie added successfully', true);
+                this.snackBar.openSnackBar('Movie saved successfully', 'Ok');
               }
               this.router.navigate(['home']);
             },
             (error) => {
-              this.alertService.error('Try to save again your movie!');
+              this.snackBar.openSnackBar('Movie did not saved sucessfully. Please try again!', 'Ok');
               this.loading = false;
             });
     }

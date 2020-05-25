@@ -19,6 +19,6 @@ export class AppComponent {
     }
 
     public addMovie() {
-        this.router.navigate(['movies/add']);
+        this.router.navigate(['/movies/save']);
     }
 }

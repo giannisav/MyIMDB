@@ -1,25 +1,15 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-  <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/home">Home</a>
-      <a class="nav-item nav-link" routerLink="/movies/save">Add Movie</a>
-      <a class="nav-item nav-link" (click)="logout()">Logout</a>
-  </div>
-</nav>
+<mat-toolbar color="pimary">
+  <button routerLink="/home" class="nav-button" mat-raised-button color="primary">Home</button>
+  <button routerLink="/movies/save" class="nav-button" mat-raised-button color="primary">Add Movie</button>
+  <button (click)="logout()" class="nav-button" mat-raised-button color="primary">Logout</button>
+</mat-toolbar>
 
-<!-- main app container -->
-<div class="jumbotron">
-  <div class="container">
-      <div class="row">
-          <div class="col-sm-6 offset-sm-3">
-              <app-alert></app-alert>
-              
-              <router-outlet></router-outlet>
-          </div>
-      </div>
-  </div>
-</div>
+<!-- main app container -->    
+<router-outlet></router-outlet>
 
-<div class="text-center mt-4">
+
+<!-- footer -->
+<div style="text-align: center; padding-top: 1%;">
   <footer>Giannis Avramidis © 2020</footer>
 </div>

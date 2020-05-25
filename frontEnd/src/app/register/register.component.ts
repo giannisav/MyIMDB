@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AlertService } from '@app/_services/alert.service';
 import { AuthenticationService } from '@app/_services/authentication.service';
+import { SnackBarService } from '@app/_services/snack-bar.service';
 import { UserService } from '@app/_services/user.service';
 import { UserDto } from '@app/dto/userDto';
 
@@ -12,14 +13,13 @@ import { UserDto } from '@app/dto/userDto';
 export class RegisterComponent implements OnInit {
     public registerForm: FormGroup;
     public loading = false;
-    public submitted = false;
 
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
         private authenticationService: AuthenticationService,
         private userService: UserService,
-        private alertService: AlertService,
+        private snackBar: SnackBarService,
     ) {
         if (this.authenticationService.isUserLoggedIn()) {
             this.router.navigate(['']);
@@ -31,16 +31,13 @@ export class RegisterComponent implements OnInit {
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(3)]],
+            password: ['', [Validators.required, Validators.minLength(6)]],
         });
     }
 
     get f() { return this.registerForm.controls; }
 
     public onSubmit() {
-        this.submitted = true;
-
-        this.alertService.clear();
 
         if (this.registerForm.invalid) {
             return;
@@ -50,11 +47,11 @@ export class RegisterComponent implements OnInit {
         this.userService.register(userDto)
             .subscribe(
                 (data) => {
-                    this.alertService.success('Registration successful', true);
+                    this.snackBar.openSnackBar('Registration successful', 'Ok');
                     this.router.navigate(['']);
                 },
                 (error) => {
-                    this.alertService.error('Registration error, try again!');
+                    this.snackBar.openSnackBar('Registration error, try again!', 'Ok');
                     this.loading = false;
                 });
     }

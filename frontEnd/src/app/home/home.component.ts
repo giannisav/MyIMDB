@@ -7,6 +7,8 @@ import { MovieService } from '@app/_services/movie.service';
              templateUrl: './home.component.html' })
 export class HomeComponent implements OnInit {
     public movies = [];
+    public displayedColumns: string[] = [ 'name', 'directorsName', 'yearOfPublication', 'Edit/Delete'];
+    public currentUser: string = sessionStorage.getItem('currentUserName');
 
     constructor(
         private movieService: MovieService,

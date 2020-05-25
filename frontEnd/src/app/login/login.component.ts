@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from '@app/_services/alert.service';
 import { AuthenticationService } from '@app/_services/authentication.service';
+import { SnackBarService } from '@app/_services/snack-bar.service';
 import { UserLoginDto } from '@app/dto/userLoginDto';
 
 @Component({ selector: 'app-login',
@@ -11,14 +11,12 @@ import { UserLoginDto } from '@app/dto/userLoginDto';
 export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
     public loading = false;
-    public submitted = false;
-    public returnUrl: string;
 
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private alertService: AlertService,
+        private snackBar: SnackBarService,
     ) {
         if (!this.authenticationService.isUserLoggedIn()) {
             this.router.navigate(['']);
@@ -35,9 +33,6 @@ export class LoginComponent implements OnInit {
     get f() { return this.loginForm.controls; }
 
     public onSubmit() {
-        this.submitted = true;
-
-        this.alertService.clear();
 
         if (this.loginForm.invalid) {
             return;
@@ -47,12 +42,12 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(userLoginDto)
             .subscribe(
                 (data) => {
-                    this.alertService.success('Sucessfully logged in', true);
+                    this.snackBar.openSnackBar('Welcome ' + data.username, 'Ok');
                     sessionStorage.setItem('currentUserName', data.username);
                     this.router.navigate(['home']);
                 },
                 (error) => {
-                    this.alertService.error('Wrong username or password');
+                    this.snackBar.openSnackBar('Wrong username or password', 'Ok');
                     this.loading = false;
                     this.router.navigate(['']);
                 });
