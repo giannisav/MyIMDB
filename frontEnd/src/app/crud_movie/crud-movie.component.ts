@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { MovieService } from '@app/_services/movie.service';
@@ -16,7 +15,7 @@ export class CrudMovieComponent implements OnInit {
     public isUserlogged: boolean;
     public movieForm: FormGroup;
     public id: number;
-    public isEditMode = false;
+    public isEditMode = true;
     public loading = false;
 
   constructor(
@@ -40,10 +39,16 @@ export class CrudMovieComponent implements OnInit {
             yearOfPublication: ['',
             Validators.compose( [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]{4}$')])],
         });
-        // this.movieForm.reset();
-        this.isEditMode = this.route.snapshot.queryParamMap.get('edit') ? true : false;
+        this.route.paramMap.subscribe((data) => {
+            this.isEditMode = Boolean (data.get('edit'));
+            console.log(this.isEditMode);
+            });
         if (this.isEditMode) {
-            this.updateFields();
+          this.updateFields();
+          console.log('update');
+        } else {
+          this.movieForm.reset();
+          console.log('reset');
         }
     }
 
