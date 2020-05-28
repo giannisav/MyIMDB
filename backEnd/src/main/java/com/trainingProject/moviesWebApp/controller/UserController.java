@@ -32,6 +32,5 @@ public class UserController {
     public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto userDto){
         return ResponseEntity.ok().body(userService.register(userDto));
     }
-
 }
 

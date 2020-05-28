@@ -1,8 +1,6 @@
 package com.trainingProject.moviesWebApp.controller;
 
 import com.trainingProject.moviesWebApp.dto.MovieDto;
-import com.trainingProject.moviesWebApp.exceptions.NotExistingMovieException;
-import com.trainingProject.moviesWebApp.exceptions.NotExistingUserException;
 import com.trainingProject.moviesWebApp.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import java.util.List;
 public class MovieController {
 
     private MovieService movieService;
-    private long id;
 
     @Autowired
     public MovieController (MovieService movieService) {
@@ -45,8 +42,8 @@ public class MovieController {
         return getMovies();
     }
 
-    @ExceptionHandler(NotExistingMovieException.class)
-    public ResponseEntity<String> notExistingUser() {
-        return ResponseEntity.ok().body("Wrong movie_id. Try again!");
-    }
+//    @ExceptionHandler(NotExistingMovieException.class)
+//    public ResponseEntity<String> notExistingUser() {
+//        return ResponseEntity.ok().body("Wrong movie_id. Try again!");
+//    }
 }

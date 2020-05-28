@@ -42,7 +42,6 @@ public class MovieServiceImpl implements MovieService {
         movieToUpdate.setName(movieDto.getName());
         movieToUpdate.setDirectorName(movieDto.getDirectorsName());
         movieToUpdate.setYearOfPublication(movieDto.getYearOfPublication());
-
         return mapper.movieToMovieDto(repository.save(movieToUpdate));
     }
 
@@ -60,7 +59,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public boolean deleteMovie(long id) {
-        Movie movieToDelete = Optional.ofNullable(repository.findMovieByMovieId(id)).orElseThrow(NotExistingMovieException::new);
+        Movie movieToDelete = Optional.ofNullable(repository.findMovieByMovieId(id)).orElseThrow(() -> new NotExistingMovieException("This movie does not exists!"));
         repository.delete(movieToDelete);
         return true;
     }
