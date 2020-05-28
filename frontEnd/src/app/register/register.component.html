@@ -24,7 +24,7 @@
         </mat-form-field>
         <mat-form-field class="form-field" appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput formControlName="password" required>
+            <input matInput formControlName="password" type="password" required>
             <mat-error *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid">
                 <span *ngIf="registerForm.controls.password.errors.required">Password is mandatory.</span>
                 <span *ngIf="registerForm.controls.password.errors.minlength">Password should be at least 6 characters</span>

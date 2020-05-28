@@ -16,6 +16,8 @@ import { CrudMovieComponent } from './crud_movie/crud-movie.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { FirtstChildComponent } from './firtst-child/firtst-child.component';
+import { SecondChildComponent } from './second-child/second-child.component';
 
 @NgModule({
     imports: [
@@ -39,6 +41,8 @@ import { RegisterComponent } from './register/register.component';
         LoginComponent,
         RegisterComponent,
         CrudMovieComponent,
+        FirtstChildComponent,
+        SecondChildComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],

@@ -1,0 +1,11 @@
+
+    <h3>Second Child - Director's Name</h3>
+    <form [formGroup]="movieForm">
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Director's Name</mat-label>
+            <input matInput formControlName="directorsName" required>
+            <mat-error *ngIf="movieForm.controls.directorsName.touched && movieForm.controls.directorsName.invalid">
+                <span *ngIf="movieForm.controls.directorsName.errors.required">Director's Name is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
+    </form>
