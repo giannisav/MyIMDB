@@ -1,14 +1,21 @@
 package com.trainingProject.moviesWebApp.service;
 
 import com.trainingProject.moviesWebApp.dto.MovieDto;
+import com.trainingProject.moviesWebApp.enums.SortingOrder;
+import com.trainingProject.moviesWebApp.enums.SortingType;
 
 import java.util.List;
 
 public interface MovieService {
     List<MovieDto> getAllMovies();
-    MovieDto updateMovie(MovieDto movieDto);
-    MovieDto addMovie(MovieDto movieDto);
-    boolean deleteMovie(long id);
-    MovieDto getMovieById(long id);
+
+    List<MovieDto> findAllMoviesAndSort(SortingOrder sortingOrder, SortingType sortingType);
+
+    MovieDto getMovieById(Long id);
+
+    List<MovieDto> findAndSortMoviesByUser_Id(Long id, SortingOrder sortingOrder, SortingType sortingType);
+
     MovieDto save(MovieDto movieDto);
+
+    boolean deleteMovie(Long id);
 }

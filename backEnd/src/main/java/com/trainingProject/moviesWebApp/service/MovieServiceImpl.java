@@ -2,14 +2,16 @@ package com.trainingProject.moviesWebApp.service;
 
 import com.trainingProject.moviesWebApp.dto.MovieDto;
 import com.trainingProject.moviesWebApp.entity.Movie;
+import com.trainingProject.moviesWebApp.enums.SortingOrder;
+import com.trainingProject.moviesWebApp.enums.SortingType;
 import com.trainingProject.moviesWebApp.exceptions.NotExistingMovieException;
 import com.trainingProject.moviesWebApp.mapper.MovieMapper;
 import com.trainingProject.moviesWebApp.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,40 +28,48 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDto> getAllMovies() {
-        return repository.findAll().stream()
-                         .map(x -> mapper.movieToMovieDto(x))
-                         .collect(Collectors.toList());
+        return repository.findAll()
+                .stream()
+                .map(x -> mapper.toMovieDto(x))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public MovieDto getMovieById(long id) {
-        return mapper.movieToMovieDto(repository.findMovieByMovieId(id));
+    public List<MovieDto> findAllMoviesAndSort(SortingOrder sortingOrder, SortingType sortingType) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortingOrder.getOrder()), sortingType.getField());
+        return repository.findAll(sort)
+                .stream()
+                .map(x -> mapper.toMovieDto(x))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public MovieDto updateMovie(MovieDto movieDto) {
-        Movie movieToUpdate = repository.findMovieByMovieId(movieDto.getId());
-        movieToUpdate.setName(movieDto.getName());
-        movieToUpdate.setDirectorName(movieDto.getDirectorsName());
-        movieToUpdate.setYearOfPublication(movieDto.getYearOfPublication());
-        return mapper.movieToMovieDto(repository.save(movieToUpdate));
-    }
-
-    @Override
-    public MovieDto addMovie(MovieDto movieDto) {
-        Movie movieToSave = mapper.movieDtoToMovie(movieDto);
-        return mapper.movieToMovieDto(repository.save(movieToSave));
+    public MovieDto getMovieById(Long id) {
+        Movie movie = Optional.ofNullable(repository.findMovieByMovieId(id))
+                .orElseThrow(() -> new NotExistingMovieException("This movie does not exists!"));
+        return mapper.toMovieDto(movie);
     }
 
     @Override
     public MovieDto save(MovieDto movieDto) {
-        if(movieDto.getId() != null){ return updateMovie(movieDto);}
-        else { return addMovie(movieDto); }
+        Movie movie = repository.save(mapper.toMovie(movieDto));
+        return mapper.toMovieDto(movie);
     }
 
     @Override
-    public boolean deleteMovie(long id) {
-        Movie movieToDelete = Optional.ofNullable(repository.findMovieByMovieId(id)).orElseThrow(() -> new NotExistingMovieException("This movie does not exists!"));
+    public List<MovieDto> findAndSortMoviesByUser_Id(Long id, SortingOrder sortingOrder, SortingType sortingType) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortingOrder.getOrder()), sortingType.getField());
+        return repository.findMoviesByUser_Id(id, sort)
+                .stream()
+                .map(x -> mapper.toMovieDto(x))
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public boolean deleteMovie(Long id) {
+        Movie movieToDelete = Optional.ofNullable(repository.findMovieByMovieId(id))
+                .orElseThrow(() -> new NotExistingMovieException("This movie does not exists!"));
         repository.delete(movieToDelete);
         return true;
     }

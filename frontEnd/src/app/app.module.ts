@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,10 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { appRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CrudMovieComponent } from './crud_movie/crud-movie.component';
+import { FirtstChildComponent } from './firtst-child/firtst-child.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { FirtstChildComponent } from './firtst-child/firtst-child.component';
 import { SecondChildComponent } from './second-child/second-child.component';
 
 @NgModule({
@@ -34,6 +35,7 @@ import { SecondChildComponent } from './second-child/second-child.component';
         MatToolbarModule,
         MatTableModule,
         MatSnackBarModule,
+        FlexLayoutModule,
     ],
     declarations: [
         AppComponent,

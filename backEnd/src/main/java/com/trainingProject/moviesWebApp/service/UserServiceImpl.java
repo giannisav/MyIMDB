@@ -3,6 +3,7 @@ package com.trainingProject.moviesWebApp.service;
 import com.trainingProject.moviesWebApp.dto.UserDto;
 import com.trainingProject.moviesWebApp.dto.UserLoginDto;
 import com.trainingProject.moviesWebApp.entity.User;
+import com.trainingProject.moviesWebApp.enums.Role;
 import com.trainingProject.moviesWebApp.exceptions.NotExistingUserException;
 import com.trainingProject.moviesWebApp.mapper.UserMapper;
 import com.trainingProject.moviesWebApp.repository.UserRepository;
@@ -25,16 +26,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto authenticate(UserLoginDto userLoginDto) {
-        User user = Optional.ofNullable(repository.findUserByUsername(userLoginDto.getUsername())).orElseThrow(() -> new NotExistingUserException("Wrong credentials"));
-        if(userLoginDto.getPassword().equals(user.getPassword())) {
-            return mapper.userToUserDto(user);
+        User user = Optional.ofNullable(repository.findUserByUsername(userLoginDto.getUsername()))
+                .orElseThrow(() -> new NotExistingUserException("Wrong credentials"));
+        if (userLoginDto.getPassword().equals(user.getPassword())) {
+            return mapper.toUserDto(user);
         }
         throw new NotExistingUserException("Wrong credentials");
     }
 
     @Override
     public UserDto register(UserDto userDto) {
-        User newUser = mapper.userDtoToUser(userDto);
-        return mapper.userToUserDto(repository.save(newUser));
+        User newUser = mapper.toUser(userDto);
+        newUser.setRole(Role.USER);
+        return mapper.toUserDto(repository.save(newUser));
     }
 }

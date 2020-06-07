@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
-@RequestMapping("/")
+@RequestMapping()
 public class UserController {
 
     private UserService userService;
