@@ -24,33 +24,32 @@ public class MovieController {
     private MovieService movieService;
     private VoteService voteService;
 
-    @Autowired
     public MovieController(MovieService movieService, VoteService voteService) {
         this.movieService = movieService;
         this.voteService = voteService;
     }
 
     @GetMapping("/movies")
-    ResponseEntity<List<MovieDto>> findMovies(@RequestParam(value = "sortingOrder") SortingOrder sortingOrder,
-                                              @RequestParam(value = "sortingType") SortingType sortingType) {
+    ResponseEntity<List<MovieDto>> findMovies(@RequestParam(value = "sortingOrder", required = false) SortingOrder sortingOrder,
+                                              @RequestParam(value = "sortingType", required = false) SortingType sortingType) {
         return ResponseEntity.ok().body(movieService.findAllMoviesAndSort(sortingOrder, sortingType));
     }
 
     @GetMapping("/movies/{id}")
-    ResponseEntity<MovieDto> getMovieById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(movieService.getMovieById(id));
+    ResponseEntity<MovieDto> findMovieById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(movieService.findMovieById(id));
     }
 
     @GetMapping("/movies/user/{id}")
-    ResponseEntity<List<MovieDto>> getMoviesByUserId(@PathVariable("id") Long id,
-                                                     @RequestParam(value = "sortingOrder") SortingOrder sortingOrder,
-                                                     @RequestParam(value = "sortingType") SortingType sortingType) {
+    ResponseEntity<List<MovieDto>> findMoviesByUserId(@PathVariable("id") Long id,
+                                                      @RequestParam(value = "sortingOrder", required = false) SortingOrder sortingOrder,
+                                                      @RequestParam(value = "sortingType", required = false) SortingType sortingType) {
         List<MovieDto> movieList = movieService.findAndSortMoviesByUser_Id(id, sortingOrder, sortingType);
         return ResponseEntity.ok().body(movieList);
     }
 
     @PostMapping("/movies/save")
-    ResponseEntity<MovieDto> saveMovie(@Valid @RequestBody MovieDto movieDto) {
+    ResponseEntity<MovieDto> save(@Valid @RequestBody MovieDto movieDto) {
         return ResponseEntity.ok().body(movieService.save(movieDto));
     }
 
@@ -60,8 +59,8 @@ public class MovieController {
     }
 
     @DeleteMapping("/movies/delete/{id}")
-    ResponseEntity<List<MovieDto>> deleteMovie(@PathVariable("id") Long id) {
-        movieService.deleteMovie(id);
+    ResponseEntity<List<MovieDto>> delete(@PathVariable("id") Long id) {
+        movieService.delete(id);
         return ResponseEntity.ok().body(movieService.getAllMovies());
     }
 

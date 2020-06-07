@@ -12,7 +12,6 @@ import com.trainingProject.moviesWebApp.mapper.MovieMapper;
 import com.trainingProject.moviesWebApp.mapper.VoteMapper;
 import com.trainingProject.moviesWebApp.repository.MovieRepository;
 import com.trainingProject.moviesWebApp.repository.VoteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,6 @@ public class VoteServiceImpl implements VoteService {
     private MovieRepository movieRepository;
     private MovieMapper movieMapper;
 
-    @Autowired
     VoteServiceImpl(VoteMapper voteMapper, VoteRepository voteRepository, MovieRepository movieRepository, MovieMapper movieMapper) {
         this.voteMapper = voteMapper;
         this.voteRepository = voteRepository;
@@ -44,7 +42,7 @@ public class VoteServiceImpl implements VoteService {
 
         if (vote.isEmpty()) {
             Vote savedVote = voteRepository.save(voteMapper.toVote(voteDto));
-            Movie movie = movieRepository.findMovieByMovieId(savedVote.getId().getMovieId());
+            Movie movie = movieRepository.findMovieById(savedVote.getId().getMovieId());
             if (isUpvote) {
                 movie.setLikes(movie.getLikes() + 1L);
             } else {
@@ -56,7 +54,7 @@ public class VoteServiceImpl implements VoteService {
         } else {
             vote.get().setRate(Rate.valueOf(voteDto.getRate()));
             Vote updatedVote = voteRepository.save(vote.get());
-            Movie movie = movieRepository.findMovieByMovieId(updatedVote.getId().getMovieId());
+            Movie movie = movieRepository.findMovieById(updatedVote.getId().getMovieId());
             if (isUpvote) {
                 movie.setDislikes(movie.getDislikes() - 1L);
                 movie.setLikes(movie.getLikes() + 1L);
@@ -73,7 +71,7 @@ public class VoteServiceImpl implements VoteService {
         UserMovieKey userMovieKey = new UserMovieKey(voteDto.getUser_id(), voteDto.getMovie_id());
         Vote vote = voteRepository.findVoteById(userMovieKey).orElseThrow(() -> new NotExistingVoteException("Vote does not exists!"));
 
-        Movie movie = movieRepository.findMovieByMovieId(voteDto.getMovie_id());
+        Movie movie = movieRepository.findMovieById(voteDto.getMovie_id());
         if (voteDto.getRate().equals(Rate.DOWNVOTE.name())) {
             movie.setDislikes(movie.getDislikes() - 1L);
         } else {

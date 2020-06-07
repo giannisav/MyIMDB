@@ -10,18 +10,27 @@ import com.trainingProject.moviesWebApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private UserRepository repository;
     private UserMapper mapper;
 
-    @Autowired
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.repository = userRepository;
         this.mapper = userMapper;
+    }
+
+    @Override
+    public List<UserDto> getUsers() {
+        return repository.findAll()
+                .stream()
+                .map(user -> mapper.toUserDto(user))
+                .collect(Collectors.toList());
     }
 
     @Override

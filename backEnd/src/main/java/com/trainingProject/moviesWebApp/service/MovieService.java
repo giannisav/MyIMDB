@@ -8,14 +8,13 @@ import java.util.List;
 
 public interface MovieService {
     List<MovieDto> getAllMovies();
-
     List<MovieDto> findAllMoviesAndSort(SortingOrder sortingOrder, SortingType sortingType);
 
-    MovieDto getMovieById(Long id);
+    MovieDto findMovieById(Long id);
 
     List<MovieDto> findAndSortMoviesByUser_Id(Long id, SortingOrder sortingOrder, SortingType sortingType);
 
     MovieDto save(MovieDto movieDto);
 
-    boolean deleteMovie(Long id);
+    boolean delete(Long id);
 }

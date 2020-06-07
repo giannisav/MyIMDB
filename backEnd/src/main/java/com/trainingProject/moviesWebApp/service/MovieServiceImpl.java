@@ -20,7 +20,6 @@ public class MovieServiceImpl implements MovieService {
     private MovieRepository repository;
     private MovieMapper mapper;
 
-    @Autowired
     public MovieServiceImpl(MovieRepository repository, MovieMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
@@ -36,6 +35,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDto> findAllMoviesAndSort(SortingOrder sortingOrder, SortingType sortingType) {
+        if (sortingOrder == null) {
+            sortingOrder = SortingOrder.DESC;
+        }
+        if (sortingType == null) {
+            sortingType = SortingType.LIKES;
+        }
         Sort sort = Sort.by(Sort.Direction.fromString(sortingOrder.getOrder()), sortingType.getField());
         return repository.findAll(sort)
                 .stream()
@@ -44,8 +49,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieDto getMovieById(Long id) {
-        Movie movie = Optional.ofNullable(repository.findMovieByMovieId(id))
+    public MovieDto findMovieById(Long id) {
+        Movie movie = Optional.ofNullable(repository.findMovieById(id))
                 .orElseThrow(() -> new NotExistingMovieException("This movie does not exists!"));
         return mapper.toMovieDto(movie);
     }
@@ -58,6 +63,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDto> findAndSortMoviesByUser_Id(Long id, SortingOrder sortingOrder, SortingType sortingType) {
+        if (sortingOrder == null) {
+            sortingOrder = SortingOrder.DESC;
+        }
+        if (sortingType == null) {
+            sortingType = SortingType.LIKES;
+        }
         Sort sort = Sort.by(Sort.Direction.fromString(sortingOrder.getOrder()), sortingType.getField());
         return repository.findMoviesByUser_Id(id, sort)
                 .stream()
@@ -67,8 +78,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public boolean deleteMovie(Long id) {
-        Movie movieToDelete = Optional.ofNullable(repository.findMovieByMovieId(id))
+    public boolean delete(Long id) {
+        Movie movieToDelete = Optional.ofNullable(repository.findMovieById(id))
                 .orElseThrow(() -> new NotExistingMovieException("This movie does not exists!"));
         repository.delete(movieToDelete);
         return true;

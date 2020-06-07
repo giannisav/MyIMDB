@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
@@ -18,18 +19,22 @@ public class UserController {
 
     private UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    @GetMapping("users")
+    public ResponseEntity<List<UserDto>> getUsers() {
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
+
     @PostMapping
-    public ResponseEntity<UserDto> login(@Valid @RequestBody UserLoginDto userLoginDto){
+    public ResponseEntity<UserDto> login(@Valid @RequestBody UserLoginDto userLoginDto) {
         return ResponseEntity.ok().body(userService.authenticate(userLoginDto));
     }
 
     @PostMapping("users/register")
-    public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok().body(userService.register(userDto));
     }
 }
