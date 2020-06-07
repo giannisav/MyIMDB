@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.trainingProject</groupId>
-	<artifactId>backEnd</artifactId>
+	<artifactId>moviesWebApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>backEnd</name>
+	<name>moviesWebApp</name>
 	<description>Web application for movies</description>
 
 	<properties>

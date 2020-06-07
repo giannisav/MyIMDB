@@ -33,7 +33,6 @@ public class VoteServiceImpl implements VoteService {
         this.movieRepository = movieRepository;
         this.movieMapper = movieMapper;
     }
-
     //TODO: break method and remove duplicates
     @Transactional
     @Override
