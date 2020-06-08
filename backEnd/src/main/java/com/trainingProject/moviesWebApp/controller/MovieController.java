@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
-@RequestMapping()
+@RequestMapping("/movies")
 public class MovieController {
 
     private MovieService movieService;
@@ -29,18 +29,18 @@ public class MovieController {
         this.voteService = voteService;
     }
 
-    @GetMapping("/movies")
-    ResponseEntity<List<MovieDto>> findMovies(@RequestParam(value = "sortingOrder", required = false) SortingOrder sortingOrder,
-                                              @RequestParam(value = "sortingType", required = false) SortingType sortingType) {
+    @GetMapping()
+    ResponseEntity<List<MovieDto>> findAllMoviesAndSort(@RequestParam(value = "sortingOrder", required = false) SortingOrder sortingOrder,
+                                                        @RequestParam(value = "sortingType", required = false) SortingType sortingType) {
         return ResponseEntity.ok().body(movieService.findAllMoviesAndSort(sortingOrder, sortingType));
     }
 
-    @GetMapping("/movies/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<MovieDto> findMovieById(@PathVariable Long id) {
         return ResponseEntity.ok().body(movieService.findMovieById(id));
     }
 
-    @GetMapping("/movies/user/{id}")
+    @GetMapping("/user/{id}")
     ResponseEntity<List<MovieDto>> findMoviesByUserId(@PathVariable("id") Long id,
                                                       @RequestParam(value = "sortingOrder", required = false) SortingOrder sortingOrder,
                                                       @RequestParam(value = "sortingType", required = false) SortingType sortingType) {
@@ -48,21 +48,27 @@ public class MovieController {
         return ResponseEntity.ok().body(movieList);
     }
 
-    @PostMapping("/movies/save")
+    @PostMapping("/save")
     ResponseEntity<MovieDto> save(@Valid @RequestBody MovieDto movieDto) {
         return ResponseEntity.ok().body(movieService.save(movieDto));
     }
 
-    @PostMapping("/movies/vote")
+    @PostMapping("/vote")
     public ResponseEntity<MovieDto> vote(@Valid @RequestBody VoteDto voteDto) {
         return ResponseEntity.ok().body(voteService.vote(voteDto));
     }
 
-    @DeleteMapping("/movies/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     ResponseEntity<List<MovieDto>> delete(@PathVariable("id") Long id) {
         movieService.delete(id);
         return ResponseEntity.ok().body(movieService.getAllMovies());
     }
+
+    @DeleteMapping("/vote/delete")
+    public ResponseEntity<MovieDto> deleteVote(@Valid @RequestBody VoteDto voteDto) {
+        return ResponseEntity.ok().body(voteService.deleteVote(voteDto));
+    }
+
 
 //    @ExceptionHandler(SpamVoteException.class)
 //    public ResponseEntity<String> cantSpamVotes() {

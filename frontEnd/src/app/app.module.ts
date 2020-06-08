@@ -14,11 +14,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { appRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CrudMovieComponent } from './crud_movie/crud-movie.component';
-import { FirtstChildComponent } from './firtst-child/firtst-child.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { SecondChildComponent } from './second-child/second-child.component';
 
 @NgModule({
     imports: [
@@ -43,8 +41,6 @@ import { SecondChildComponent } from './second-child/second-child.component';
         LoginComponent,
         RegisterComponent,
         CrudMovieComponent,
-        FirtstChildComponent,
-        SecondChildComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],

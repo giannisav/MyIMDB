@@ -66,17 +66,19 @@ public class VoteServiceImpl implements VoteService {
         }
     }
 
+    @Transactional
     @Override
     public MovieDto deleteVote(VoteDto voteDto) {
         UserMovieKey userMovieKey = new UserMovieKey(voteDto.getUser_id(), voteDto.getMovie_id());
         Vote vote = voteRepository.findVoteById(userMovieKey).orElseThrow(() -> new NotExistingVoteException("Vote does not exists!"));
 
         Movie movie = movieRepository.findMovieById(voteDto.getMovie_id());
-        if (voteDto.getRate().equals(Rate.DOWNVOTE.name())) {
+        if (vote.getRate().equals(Rate.DOWNVOTE)) {
             movie.setDislikes(movie.getDislikes() - 1L);
         } else {
             movie.setLikes(movie.getLikes() - 1L);
         }
+        movieRepository.save(movie);
         voteRepository.delete(vote);
 
         return movieMapper.toMovieDto(movie);

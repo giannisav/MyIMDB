@@ -3,16 +3,24 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="form-field" appearance="outline">
             <mat-label>FirstName</mat-label>
-            <input matInput formControlName="firstName" required>
-            <mat-error *ngIf="registerForm.controls.firstName.touched && registerForm.controls.firstName.invalid">
-                <span *ngIf="registerForm.controls.firstName.errors.required">FirstName is mandatory.</span>
+            <input matInput formControlName="firstname" required>
+            <mat-error *ngIf="registerForm.controls.firstname.touched && registerForm.controls.firstname.invalid">
+                <span *ngIf="registerForm.controls.firstname.errors.required">FirstName is mandatory.</span>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="outline">
             <mat-label>LastName</mat-label>
-            <input matInput formControlName="lastName" required>
-            <mat-error *ngIf="registerForm.controls.lastName.touched && registerForm.controls.lastName.invalid">
-                <span *ngIf="registerForm.controls.lastName.errors.required">LastName is mandatory.</span>
+            <input matInput formControlName="lastname" required>
+            <mat-error *ngIf="registerForm.controls.lastname.touched && registerForm.controls.lastname.invalid">
+                <span *ngIf="registerForm.controls.lastname.errors.required">LastName is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
+                <span *ngIf="registerForm.controls.email.errors.required">Email is mandatory.</span>
+                <span *ngIf="registerForm.controls.email.errors.pattern">Please provide a valid email address</span>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="outline">

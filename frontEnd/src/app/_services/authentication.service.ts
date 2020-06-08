@@ -12,7 +12,7 @@ export class AuthenticationService {
     constructor(private http: HttpClient) {}
 
     public login(userLoginDto: UserLoginDto): Observable<UserDto> {
-        return this.http.post<any>(`${this.baseUrl}`, userLoginDto);
+        return this.http.post<any>(`${this.baseUrl}/login`, userLoginDto);
     }
 
     public isUserLoggedIn() {

@@ -2,8 +2,20 @@
     <h2 *ngIf="isEditMode">Edit Movie</h2>
     <h2 *ngIf="!isEditMode">Add Movie</h2>
     <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
-        <app-firtst-child #movieName></app-firtst-child>
-        <app-second-child #directorsName></app-second-child>
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Movie Title</mat-label>
+            <input matInput formControlName="title" required>
+            <mat-error *ngIf="movieForm.controls.title.touched && movieForm.controls.title.invalid">
+                <span *ngIf="movieForm.controls.title.errors.required">Movie Name is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Director</mat-label>
+            <input matInput formControlName="director" required>
+            <mat-error *ngIf="movieForm.controls.director.touched && movieForm.controls.director.invalid">
+                <span *ngIf="movieForm.controls.director.errors.required">Movie Name is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
         <mat-form-field class="form-field" appearance="outline">
             <mat-label>Year Of Publication</mat-label>
             <input matInput formControlName="yearOfPublication" required>
@@ -14,20 +26,13 @@
                 <span *ngIf="movieForm.controls.yearOfPublication.errors.maxlength">Year Of Publication should be 4 digits.</span>
             </mat-error>
         </mat-form-field>
-        <!-- <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Movie Name</mat-label>
-            <input matInput formControlName="name"required>
-            <mat-error *ngIf="movieForm.controls.name.touched && movieForm.controls.name.invalid">
-                <span *ngIf="movieForm.controls.name.errors.required">Movie Name is mandatory.</span>
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" required>
+            <mat-error *ngIf="movieForm.controls.description.touched && movieForm.controls.description.invalid">
+                <span *ngIf="movieForm.controls.description.errors.required">Description is mandatory.</span>
             </mat-error>
-        </mat-form-field> -->
-        <!-- <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Director's Name</mat-label>
-            <input matInput formControlName="directorsName" required>
-            <mat-error *ngIf="movieForm.controls.directorsName.touched && movieForm.controls.directorsName.invalid">
-                <span *ngIf="movieForm.controls.directorsName.errors.required">Director's Name is mandatory.</span>
-            </mat-error>
-        </mat-form-field> -->
+        </mat-form-field>
         <button class="form-button" mat-raised-button color="primary" [disabled]="loading" type="submit">Save</button>
     </form>
 </mat-card>

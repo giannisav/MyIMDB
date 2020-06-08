@@ -1,0 +1,327 @@
+{
+  "info": {
+    "_postman_id": "09ce4546-c33b-4ce2-9dad-43881346f6a0",
+    "name": "MyIMDB",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "localhost:8080/movies",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/movies",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movies"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/movies?sortingOrder=ASC&sortingType=DISLIKES",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/movies?sortingOrder=ASC&sortingType=DISLIKES",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movies"
+          ],
+          "query": [
+            {
+              "key": "sortingOrder",
+              "value": "ASC"
+            },
+            {
+              "key": "sortingType",
+              "value": "DISLIKES"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/movies/1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/movies/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movies",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/movies/user/1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/movies/user/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movies",
+            "user",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/users",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"firstname\":\"john\",\n\t\"lastname\":\"egw\",\n\t\"username\":\"user\",\n\t\"password\":\"pass12\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/users",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/users/register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"firstname\":\"Name\",\n\t\"lastname\":\"Lastname\",\n\t\"email\":\"mail@mail.com\",\n\t\"username\":\"test\",\n\t\"password\":\"testpass\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/users/register",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "users",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/movies/save",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n            \r\n    \"title\":\"Test title\",\r\n    \"director\":\"Unknown\",\r\n    \"yearOfPublication\":\"2000\",\r\n    \"description\":\"test it\",\r\n    \"username\":\"test\",\r\n    \"likes\":2,\r\n    \"dislikes\":7,\r\n    \"publicationDate\":\"1999-01-08\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/movies/save",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movies",
+            "save"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/movies/vote",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"rate\":\"DOWNVOTE\",\n\t\"movie_id\":1,\n\t\"user_id\":1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/movies/vote",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movies",
+            "vote"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"username\":\"test\",\n\t\"password\":\"testpass\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/login",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/api/movies/vote/delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"movie_id\":1,\n\t\"user_id\":1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/movies/vote/delete",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movies",
+            "vote",
+            "delete"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8080/movies/delete/1",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/movies/delete/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "movies",
+            "delete",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}

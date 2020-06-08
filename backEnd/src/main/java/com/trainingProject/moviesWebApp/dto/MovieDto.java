@@ -26,7 +26,7 @@ public class MovieDto {
     @Size(max = 200, message = "Director must not have more than 200 characters")
     private String description;
 
-    private UserDto user;
+    private String username;
 
     @PositiveOrZero(message = "Invalid number of likes")
     private Long likes;
@@ -79,12 +79,12 @@ public class MovieDto {
         this.description = description;
     }
 
-    public UserDto getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(UserDto user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Long getLikes() {

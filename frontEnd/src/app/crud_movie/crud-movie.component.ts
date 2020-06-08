@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '@app/_services/movie.service';
 import { SnackBarService } from '@app/_services/snack-bar.service';
 import { MovieDto } from '@app/dto/movieDto';
-import { FirtstChildComponent } from '@app/firtst-child/firtst-child.component';
-import { SecondChildComponent } from '@app/second-child/second-child.component';
 
 @Component({
   selector: 'app-crud-movie',
@@ -19,9 +17,6 @@ export class CrudMovieComponent implements OnInit, AfterViewInit {
     public isEditMode = true;
     public loading = false;
 
-    @ViewChild('movieName') public child1: FirtstChildComponent;
-    @ViewChild('directorsName') public child2: SecondChildComponent;
-
   constructor(
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
@@ -33,19 +28,17 @@ export class CrudMovieComponent implements OnInit, AfterViewInit {
 
     public ngOnInit() {
       this.movieForm = this.formBuilder.group({
-        directorsName: ['', Validators.required],
-        name: ['', Validators.required],
+        title: ['', Validators.required],
+        director: ['', Validators.required],
         yearOfPublication: ['',
         Validators.compose( [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]{4}$')])],
+        description: ['', Validators.required],
         });
     }
 
     get f() { return this.movieForm.controls; }
 
     public onSubmit() {
-      this.f.name.patchValue(this.child1.movieForm.controls.name.value);
-      this.f.directorsName.setValue(this.child2.movieForm.controls.directorsName.value);
-
       if (this.movieForm.invalid) {
           return this.snackBar.openSnackBar('Invalid fields', 'Ok');
       }
@@ -59,9 +52,7 @@ export class CrudMovieComponent implements OnInit, AfterViewInit {
 
     public updateFields() {
       const movieDto: MovieDto = JSON.parse(this.route.snapshot.queryParamMap.get('movieDto'));
-      this.f.yearOfPublication.setValue(movieDto.yearOfPublication);
-      this.child1.setName(movieDto.name);
-      this.child2.setDirectorsName(movieDto.directorsName);
+      this.movieForm.patchValue(movieDto);
     }
 
     public ngAfterViewInit() {

@@ -2,16 +2,17 @@ package com.trainingProject.moviesWebApp.mapper;
 
 import com.trainingProject.moviesWebApp.dto.MovieDto;
 import com.trainingProject.moviesWebApp.entity.Movie;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.trainingProject.moviesWebApp.entity.User;
+import com.trainingProject.moviesWebApp.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MovieMapper {
 
-    private UserMapper userMapper;
+    private UserRepository userRepository;
 
-    public MovieMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public MovieMapper(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public Movie toMovie(MovieDto movieDto) {
@@ -24,7 +25,8 @@ public class MovieMapper {
         movie.setCreatedAt(movieDto.getCreatedAt());
         movie.setLikes(movieDto.getLikes());
         movie.setDislikes(movieDto.getDislikes());
-        movie.setUser(userMapper.toUser(movieDto.getUser()));
+        User user = userRepository.findUserByUsername(movieDto.getUsername());
+        movie.setUser(user);
         return movie;
     }
 
@@ -38,7 +40,7 @@ public class MovieMapper {
         movieDto.setCreatedAt(movie.getCreatedAt());
         movieDto.setLikes(movie.getLikes());
         movieDto.setDislikes(movie.getDislikes());
-        movieDto.setUser(userMapper.toUserDto(movie.getUser()));
+        movieDto.setUsername(movie.getUser().getUsername());
         return movieDto;
     }
 }
